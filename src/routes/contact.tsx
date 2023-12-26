@@ -3,7 +3,7 @@ import { getContact, updateContact } from "../contacts";
 
 
 
-export async function loader({ params }) {
+export async function loader({ params } : any) {
   const contact = await getContact(params.contactId);
   if (!contact) {
     throw new Response("", {
@@ -14,7 +14,7 @@ export async function loader({ params }) {
   return { contact };
 }
 
-export async function action({ request, params }) {
+export async function action({ request, params } : any) {
   let formData = await request.formData();
   return updateContact(params.contactId, {
     favorite: formData.get("favorite") === "true",
@@ -23,7 +23,7 @@ export async function action({ request, params }) {
 
 export default function Contact() {
 
-  const { contact } = useLoaderData();
+  const { contact } : any = useLoaderData();
   return (
     <div id="contact">
       <div>
@@ -83,7 +83,7 @@ export default function Contact() {
   );
 }
 
-function Favorite({ contact }) {
+function Favorite({ contact } : any) {
   // yes, this is a `let` for later
   const fetcher = useFetcher();
   let favorite = contact.favorite;

@@ -2,7 +2,7 @@ import React from "react";
 import { useRouteError } from "react-router-dom";
 
 const ErrorPage: React.FC = () => {
-    const error:unknown= useRouteError();
+    const error = useRouteError() as any;
     console.error(error);
 
     return (

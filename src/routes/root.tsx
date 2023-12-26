@@ -1,6 +1,5 @@
 import { 
   Outlet,
-  Link,
   NavLink,
   useLoaderData,
   Form,
@@ -9,12 +8,12 @@ import {
   useSubmit
 } from "react-router-dom";
 
-import { getContacts, createContact } from "../contacts";
+import { getContacts, createContact, Contact } from "../contacts";
 
-export async function loader({ request }) {
+export async function loader({ request } : any) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const contacts = await getContacts(q);
+  const contacts = await getContacts(q||undefined) as Contact[];
   return { contacts, q };
 }
 
@@ -24,7 +23,7 @@ export async function action() {
 }
 
 export default function Root() {
-    const { contacts, q } = useLoaderData();
+    const { contacts, q } = useLoaderData() as any;
     const navigation = useNavigation();
     const submit = useSubmit();
 
@@ -71,7 +70,7 @@ export default function Root() {
           <nav>
           {contacts.length ? (
             <ul>
-              {contacts.map((contact) => (
+              {contacts.map((contact : Contact) => (
                 <li key={contact.id}>
                   <NavLink
                     to={`contacts/${contact.id}`}
